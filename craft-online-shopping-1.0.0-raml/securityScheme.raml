@@ -1,0 +1,12 @@
+#%RAML 1.0 SecurityScheme
+type: Basic Authentication
+description: use pwd and username
+describedBy:
+  headers:
+    Authorization: 
+    type: string
+  responses:
+    401:
+      description: unauthorized user
+    403:
+      description: forbidden

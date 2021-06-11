@@ -1,0 +1,93 @@
+#%RAML 1.0
+title: craft-online-shopping
+uses:
+  lib: library.raml
+
+/products:
+  description: products
+  get:
+    queryParameters:
+      name:
+        type: string
+        description: the name of the product
+        maxLength: 10
+        required: false
+        example: Dell
+      productid:
+        type: integer
+        description: the id of the product
+        required: false
+        example: 1524
+    headers:
+      connection-type: 
+        description: multiple connection is allowed for this rest api
+        type: array
+        required: false
+      session:
+        description: connection session is stored
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: lib.productTypes []
+            example: 
+              !include Examples/products.raml 
+    is:
+     -  lib.collections
+
+  /productId:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: lib.productTypes
+              example:
+                !include Examples/product.raml  
+    is:
+      - lib.collections
+
+/orders:
+  get:
+    is:
+      - lib.collections
+  type:
+    lib.postresource:
+      exampleReferance1: 
+        {
+          "date": "-2021",
+          "amount": 2,
+          "orderid": 2,
+          "userid": 15,
+          "status": "pending"
+        }      
+
+  /orderId:
+    get: 
+      responses:
+        200:
+          body:
+            application/json:
+              type: lib.productTypes
+              example:
+                !include Examples/product.raml
+  /users:
+    type:
+      lib.postresource:
+        exampleReferance1: 
+          {
+            "uid": 1524
+          }
+  /category:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: lib.productTypes
+              example:
+                !include Examples/category1.raml
+      
+      
